@@ -2,13 +2,13 @@
 
 import React from "react";
 import Image from "next/image";
-import { AyatCard } from "./AyatCard";
+import { AyahCard } from "./AyahCard";
 import { Loader } from "@/components/shared/Loader";
 
 import { FeedData } from "@/types";
 import { useSettings } from "@/components/context/SettingsContext";
 
-interface AyatFeedProps {
+interface AyahFeedProps {
   feedData: FeedData | null;
   onNextFeed?: () => void;
   onPrevFeed?: () => void;
@@ -17,7 +17,7 @@ interface AyatFeedProps {
   onScrollDirection?: (dir: "up" | "down") => void;
 }
 
-export const AyatFeed = ({ feedData, onNextFeed, onPrevFeed, hasNext, hasPrev, onScrollDirection }: AyatFeedProps) => {
+export const AyahFeed = ({ feedData, onNextFeed, onPrevFeed, hasNext, hasPrev, onScrollDirection }: AyahFeedProps) => {
   const { isDarkMode } = useSettings();
   const lastScroll = React.useRef(0);
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
@@ -147,7 +147,7 @@ export const AyatFeed = ({ feedData, onNextFeed, onPrevFeed, hasNext, hasPrev, o
         </div>
       </div>
 
-      {/* Ayat List */}
+      {/* Ayah List */}
       <div className="flex flex-col">
         {(feedData.verses || []).map((verse, index) => {
           const prevVerse = index > 0 ? feedData.verses[index - 1] : null;
@@ -168,7 +168,7 @@ export const AyatFeed = ({ feedData, onNextFeed, onPrevFeed, hasNext, hasPrev, o
                   </div>
                 </div>
               )}
-              <AyatCard surahId={verse.surah_id || parseInt(feedData.id as string)} verse={verse} />
+              <AyahCard surahId={verse.surah_id || parseInt(feedData.id as string)} verse={verse} />
             </React.Fragment>
           );
         })}

@@ -37,20 +37,8 @@ export const SurahDrawer = ({
   const [pageQuery, setPageQuery] = useState("");
   const [expandedJuz, setExpandedJuz] = useState<number | null>(null);
   const [direction, setDirection] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
   const pageScrollRef = useRef<HTMLDivElement>(null);
   const surahScrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setHasMounted(true);
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   // Compute the active surah ID regardless of feed type
   const activeSurahId = useMemo(() => {
@@ -245,9 +233,9 @@ export const SurahDrawer = ({
     
       <motion.aside
         initial={false}
-        animate={{ x: isMobile ? (isOpen ? 0 : "-100%") : 0 }}
-        transition={hasMounted ? { type: "spring", stiffness: 300, damping: 30 } : { duration: 0 }}
-        className={`fixed left-0 top-0 z-60 flex h-full w-[320px] flex-col border-r border-(--border)/10 bg-[var(--background)] shadow-xl lg:static lg:z-10 lg:translate-x-0 lg:shadow-none max-lg:w-full lg:flex`}
+        animate={{ x: isOpen ? 0 : "-100%" }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className={`fixed left-0 top-0 z-60 flex h-full w-[320px] flex-col border-r border-(--border)/10 bg-[var(--background)] shadow-xl lg:static lg:z-10 lg:!transform-none lg:shadow-none max-lg:w-full lg:flex`}
       >
         <div className="lg:hidden flex items-start justify-between gap-3 p-6 pb-2">
           <div className="flex gap-4">

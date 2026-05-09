@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Navbar } from "@/components/layout/Navbar";
 import { SurahDrawer } from "@/components/panel/SurahDrawer";
-import { AyatFeed } from "@/components/feed/AyatFeed";
+import { AyahFeed } from "@/components/feed/AyahFeed";
 import { RightPanel } from "@/components/panel/RightPanel";
 import { AudioPlayer } from "@/components/audio/AudioPlayer";
 import { useAudio } from "@/components/audio/AudioContext";
@@ -187,7 +187,7 @@ export const AppShell = ({ children }: { children: React.ReactNode }) => {
               setActiveFeedQuery({ type: "page", id: pageId });
             }}
           />
-          <AyatFeed
+          <AyahFeed
             feedData={feedData}
             onNextFeed={handleNextFeed}
             onPrevFeed={handlePrevFeed}

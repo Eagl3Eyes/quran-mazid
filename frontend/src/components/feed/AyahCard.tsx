@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import { Play, Pause, BookOpen, Bookmark, MoreVertical } from "lucide-react";
+import React, { useRef, useEffect, useState } from "react";
+import { Play, Pause, BookOpen, Bookmark, MoreVertical, MoreHorizontal, Copy, Link, Share2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSettings } from "@/components/context/SettingsContext";
 import { useAudio } from "@/components/audio/AudioContext";
 
 import { Verse } from "@/types";
 
-interface AyatCardProps {
+interface AyahCardProps {
   surahId: number;
   verse: Verse;
 }
@@ -15,12 +16,13 @@ interface AyatCardProps {
 const toArabicNumber = (num: number) => 
   num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d as any]);
 
-export const AyatCard = ({ surahId, verse }: AyatCardProps) => {
+export const AyahCard = ({ surahId, verse }: AyahCardProps) => {
   const { arabicFontSize, translationFontSize, arabicFontFace } = useSettings();
   const { currentVerseId, isPlaying, playVerse, pause, resume } = useAudio();
   
   const isCurrentPlaying = currentVerseId === verse.id;
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (isCurrentPlaying && containerRef.current) {
@@ -71,12 +73,14 @@ export const AyatCard = ({ surahId, verse }: AyatCardProps) => {
         isCurrentPlaying ? "" : ""
       }`}
     >
-      {/* Left Column (Actions) */}
-      <div className="flex flex-col items-center gap-4 w-[50px] shrink-0 pt-1">
+      {/* Left Column / Mobile Top Row */}
+      <div className="flex md:flex-col items-center justify-between md:justify-start gap-4 md:w-[50px] shrink-0 pt-1 w-full">
         <span className="text-[11px] md:text-xs font-bold text-[var(--primary-green)] tracking-wider">
           {surahId}:{verse.id}
         </span>
-        <div className="flex flex-col gap-4 mt-2">
+        
+        {/* Desktop Actions */}
+        <div className="hidden md:flex flex-col gap-4 mt-2">
           <button onClick={handlePlayClick} className="p-1 text-[var(--text-secondary)] hover:text-[var(--primary-green)] transition-colors cursor-pointer">
             {isCurrentPlaying && isPlaying ? <Pause size={20}/> : <Play size={20}/>}
           </button>
@@ -90,6 +94,14 @@ export const AyatCard = ({ surahId, verse }: AyatCardProps) => {
             <MoreVertical size={20}/>
           </button>
         </div>
+
+        {/* Mobile 3-dots */}
+        <button 
+          onClick={() => setIsMobileMenuOpen(true)}
+          className="md:hidden p-1 text-[var(--text-secondary)] hover:text-[var(--primary-green)] transition-colors cursor-pointer"
+        >
+          <MoreHorizontal size={20}/>
+        </button>
       </div>
 
       {/* Right Column - Arabic & Translation */}
@@ -131,6 +143,62 @@ export const AyatCard = ({ surahId, verse }: AyatCardProps) => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Bottom Sheet Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/60 z-50 md:hidden"
+            />
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed bottom-0 left-0 right-0 bg-[var(--surface-secondary)] rounded-t-3xl z-50 md:hidden pb-8 pt-4 px-2 shadow-2xl"
+            >
+              <div className="w-12 h-1.5 bg-[var(--border)]/20 rounded-full mx-auto mb-4" />
+              <div className="flex flex-col gap-1">
+                <button 
+                  onClick={() => {
+                    handlePlayClick();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-4 p-4 text-[var(--text-primary)] hover:bg-[var(--surface)] rounded-xl transition-colors text-left"
+                >
+                  {isCurrentPlaying && isPlaying ? <Pause size={20} className="text-[var(--text-secondary)]" /> : <Play size={20} className="text-[var(--text-secondary)]" />}
+                  <span className="text-sm font-medium text-[var(--text-primary)]/80">Play</span>
+                </button>
+                <button className="flex items-center gap-4 p-4 text-[var(--text-primary)] hover:bg-[var(--surface)] rounded-xl transition-colors text-left">
+                  <BookOpen size={20} className="text-[var(--text-secondary)]" />
+                  <span className="text-sm font-medium text-[var(--text-primary)]/80">Tafsir</span>
+                </button>
+                <button className="flex items-center gap-4 p-4 text-[var(--text-primary)] hover:bg-[var(--surface)] rounded-xl transition-colors text-left">
+                  <Bookmark size={20} className="text-[var(--text-secondary)]" />
+                  <span className="text-sm font-medium text-[var(--text-primary)]/80">Bookmark</span>
+                </button>
+                <button className="flex items-center gap-4 p-4 text-[var(--text-primary)] hover:bg-[var(--surface)] rounded-xl transition-colors text-left">
+                  <Copy size={20} className="text-[var(--text-secondary)]" />
+                  <span className="text-sm font-medium text-[var(--text-primary)]/80">Ayah Copy</span>
+                </button>
+                <button className="flex items-center gap-4 p-4 text-[var(--text-primary)] hover:bg-[var(--surface)] rounded-xl transition-colors text-left">
+                  <Link size={20} className="text-[var(--text-secondary)]" />
+                  <span className="text-sm font-medium text-[var(--text-primary)]/80">Copy Link</span>
+                </button>
+                <button className="flex items-center gap-4 p-4 text-[var(--text-primary)] hover:bg-[var(--surface)] rounded-xl transition-colors text-left">
+                  <Share2 size={20} className="text-[var(--text-secondary)]" />
+                  <span className="text-sm font-medium text-[var(--text-primary)]/80">Ayah Share</span>
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
