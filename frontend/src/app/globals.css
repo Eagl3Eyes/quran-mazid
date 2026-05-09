@@ -62,17 +62,28 @@
 }
 
 /* Optimized Theme Transition - Targeted to prevent 'cracking' lag */
-html, body, aside, nav, main, header, section, .flex, button, input, div {
-  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-              color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              fill 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+html,
+body,
+aside,
+nav,
+main,
+header,
+section,
+.flex,
+button,
+input,
+div {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    fill 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Ensure images and their containers don't show a transitioning background square */
-img, .image-container {
+img,
+.image-container {
   background-color: transparent !important;
 }
 
@@ -81,14 +92,17 @@ img, .image-container {
     width: 6px;
     height: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     background: var(--primary-green);
     border-radius: 10px;
     transition: background 0.3s ease;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-green);
   }
