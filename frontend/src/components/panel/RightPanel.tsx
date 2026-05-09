@@ -323,7 +323,7 @@ export const RightPanel = () => {
                     </div>
 
                     {/* Support Box */}
-                    <div className="mt-4 p-5 bg-[#eff6ed] dark:bg-[#111a10] rounded-2xl border border-[#428038]/20 flex flex-col gap-4 relative overflow-hidden group">
+                    <div className="mt-4 p-5 bg-[var(--bg-support)] rounded-2xl border border-[#428038]/20 flex flex-col gap-4 relative overflow-hidden group">
                       <h3 className="text-[var(--text-primary)] font-bold text-lg leading-tight">Help spread the knowledge of Islam</h3>
                       <p className="text-[14px] text-[var(--text-secondary)] leading-relaxed relative z-10 font-medium">
                         Your regular support helps us reach our religious brothers and sisters with the message of Islam. Join our mission and be part of the big change.

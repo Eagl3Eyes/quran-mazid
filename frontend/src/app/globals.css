@@ -31,6 +31,7 @@
   --bg-secondary: #f5f5f5;
   --bg-dark-green: #428038;
   --bg-primary: var(--background);
+  --bg-support: #eff6ed;
 }
 
 .dark {
@@ -46,6 +47,7 @@
   --bg-surface: #111510;
   --bg-dark-green: #428038;
   --bg-primary: var(--background);
+  --bg-support: #111a10;
 }
 
 @theme inline {
