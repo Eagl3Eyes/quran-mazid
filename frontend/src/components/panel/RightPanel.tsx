@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSettings } from "@/components/context/SettingsContext";
 import { useAudio } from "@/components/audio/AudioContext";
 import { X, ChevronDown, ChevronUp, BookOpenText, Headset } from "lucide-react";
+import { SettingsGearIcon } from "@/components/shared/icons";
 import { motion, AnimatePresence } from "framer-motion";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
@@ -114,16 +115,19 @@ export const RightPanel = () => {
   };
 
   const PanelContent = (
-    <div className="flex flex-col h-full bg-[var(--surface)] border-l border-[var(--border)]/10 w-full max-w-sm ml-auto">
+    <div className="flex flex-col h-full bg-[var(--surface)] xl:border-l border-[var(--border)]/10 w-full xl:max-w-sm">
       <style dangerouslySetInnerHTML={{ __html: sliderStyle }} />
       {/* Mobile Header */}
-      <div className="flex items-center justify-between p-4 border-b border-[var(--border)] xl:hidden">
-        <h2 className="text-[var(--text-primary)] font-semibold">Settings</h2>
+      <div className="flex items-center justify-between p-6 pb-4 xl:hidden">
+        <div className="flex items-center gap-3">
+          <SettingsGearIcon />
+          <h2 className="text-[var(--text-primary)] text-xl font-bold">Settings</h2>
+        </div>
         <button
           onClick={() => setIsMobileSettingsOpen(false)}
-          className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+          className="flex size-10 items-center justify-center text-[var(--text-secondary)] transition hover:text-[var(--text-primary)] cursor-pointer"
         >
-          <X size={20} />
+          <X size={24} strokeWidth={1.5} />
         </button>
       </div>
 
@@ -135,8 +139,8 @@ export const RightPanel = () => {
               key={tab}
               onClick={() => handleTabChange(tab as any)}
               className={`cursor-pointer relative flex-1 py-1.5 px-4 text-sm font-medium transition-colors z-10 ${activeTab === tab
-                  ? "text-[var(--text-primary)] font-bold"
-                  : "text-[var(--text-secondary)]/60"
+                ? "text-[var(--text-primary)] font-bold"
+                : "text-[var(--text-secondary)]/60"
                 }`}
             >
               {activeTab === tab && (
@@ -374,35 +378,32 @@ export const RightPanel = () => {
                                 { id: "madani", name: "New Madani Mushaf" },
                                 { id: "nurani", name: "Nurani Mushaf" }
                               ].map((mushaf) => (
-                                <div 
-                                  key={mushaf.id} 
-                                  className={`flex flex-col gap-3 p-4 bg-[var(--surface-secondary)] rounded-2xl border border-[var(--border)]/10 hover:border-[var(--primary-green)]/30 transition-all cursor-pointer group ${
-                                    mushaf.id === "unicode" ? "ring-1 ring-[var(--primary-green)]/30" : ""
-                                  }`}
-                                  onClick={() => {}} // Handle mushaf change
+                                <div
+                                  key={mushaf.id}
+                                  className={`flex flex-col gap-3 p-4 bg-[var(--surface-secondary)] rounded-2xl border border-[var(--border)]/10 hover:border-[var(--primary-green)]/30 transition-all cursor-pointer group ${mushaf.id === "unicode" ? "ring-1 ring-[var(--primary-green)]/30" : ""
+                                    }`}
+                                  onClick={() => { }} // Handle mushaf change
                                 >
                                   <div className="flex items-center gap-3">
-                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                                      mushaf.id === "unicode" ? "border-[var(--primary-green)]" : "border-[var(--text-secondary)]/30"
-                                    }`}>
+                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${mushaf.id === "unicode" ? "border-[var(--primary-green)]" : "border-[var(--text-secondary)]/30"
+                                      }`}>
                                       {mushaf.id === "unicode" && (
                                         <div className="w-2.5 h-2.5 rounded-full bg-[var(--primary-green)]" />
                                       )}
                                     </div>
-                                    <span className={`text-sm font-bold ${
-                                      mushaf.id === "unicode" ? "text-[var(--primary-green)]" : "text-[var(--text-primary)]"
-                                    }`}>
+                                    <span className={`text-sm font-bold ${mushaf.id === "unicode" ? "text-[var(--primary-green)]" : "text-[var(--text-primary)]"
+                                      }`}>
                                       {mushaf.name}
                                     </span>
                                   </div>
-                                  
+
                                   {/* Preview Box */}
                                   <div className="w-full h-24 bg-[var(--background)] rounded-xl overflow-hidden border border-[var(--border)]/10 p-2 flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
                                     <div className="w-full h-full relative">
                                       <div className="absolute inset-0 flex flex-col items-center justify-center text-[var(--text-secondary)] text-[10px] font-serif">
                                         {mushaf.id === "unicode" ? (
                                           <div className="text-center px-4 leading-relaxed text-[var(--text-primary)]/70">
-                                            بسم الله الرحمن الرحيم<br/>
+                                            بسم الله الرحمن الرحيم<br />
                                             الم ذلك الكتاب لا ريب فيه هدى للمتقين
                                           </div>
                                         ) : (
@@ -451,10 +452,9 @@ export const RightPanel = () => {
                       {["Uthmani", "Indopak"].map((tab) => (
                         <button
                           key={tab}
-                          onClick={() => {}} 
-                          className={`flex-1 py-2 text-sm font-bold rounded-full transition-all ${
-                            tab === "Uthmani" ? "bg-[var(--background)] text-[var(--text-primary)] shadow-sm" : "text-[var(--text-secondary)]"
-                          }`}
+                          onClick={() => { }}
+                          className={`flex-1 py-2 text-sm font-bold rounded-full transition-all ${tab === "Uthmani" ? "bg-[var(--background)] text-[var(--text-primary)] shadow-sm" : "text-[var(--text-secondary)]"
+                            }`}
                         >
                           {tab}
                         </button>
@@ -479,9 +479,8 @@ export const RightPanel = () => {
                             onClick={() => {
                               setArabicFontFace(font.id);
                             }}
-                            className={`flex items-center justify-between w-full p-4 rounded-xl transition-all cursor-pointer text-left ${
-                              isActive ? "bg-[var(--surface-secondary)] text-[var(--primary-green)]" : "text-[var(--text-primary)]/80 hover:bg-[var(--surface-secondary)]/50"
-                            }`}
+                            className={`flex items-center justify-between w-full p-4 rounded-xl transition-all cursor-pointer text-left ${isActive ? "bg-[var(--surface-secondary)] text-[var(--primary-green)]" : "text-[var(--text-primary)]/80 hover:bg-[var(--surface-secondary)]/50"
+                              }`}
                           >
                             <span className="text-sm font-bold">{font.name}</span>
                             {isActive && (
@@ -528,7 +527,7 @@ export const RightPanel = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 w-80 max-w-[85vw] h-full z-50 xl:hidden"
+              className="fixed inset-0 z-50 xl:hidden"
             >
               {PanelContent}
             </motion.div>

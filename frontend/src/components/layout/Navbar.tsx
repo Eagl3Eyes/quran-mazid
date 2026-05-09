@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { SearchIcon, ThemeMoonIcon, ThemeSunIcon, SettingsGearIcon, SupportHeartIcon } from "@/components/shared/icons";
+import { motion } from "framer-motion";
 import { TextAlignJustify, X } from "lucide-react";
 import { useSettings } from "@/components/context/SettingsContext";
 
@@ -98,10 +99,26 @@ export const Navbar = ({
         <button
           type="button"
           onClick={onMenuClick}
-          className="relative z-50 flex items-center justify-center rounded-full border border-[var(--border)] p-2 text-[var(--text-secondary)] transition hover:text-[var(--text-primary)] lg:hidden"
+          className="relative z-50 flex size-[34px] items-center justify-center rounded-full bg-[var(--surface-secondary)] text-[var(--primary-green)] transition-all duration-300 hover:scale-105 active:scale-90 lg:hidden"
           aria-label="Toggle surah drawer"
         >
-          {isDrawerOpen ? <X size={18} /> : <TextAlignJustify size={18} />}
+          <div className="flex size-[18px] flex-col items-center justify-center gap-[3px]">
+            <motion.span
+              animate={isDrawerOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              className="h-[2px] w-full rounded-full bg-current"
+            />
+            <motion.span
+              animate={isDrawerOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
+              transition={{ duration: 0.2 }}
+              className="h-[2px] w-full rounded-full bg-current"
+            />
+            <motion.span
+              animate={isDrawerOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              className="h-[2px] w-full rounded-full bg-current"
+            />
+          </div>
         </button>
         <div className="leading-tight">
           <p className="text-base font-bold md:text-lg text-[var(--text-primary)]">

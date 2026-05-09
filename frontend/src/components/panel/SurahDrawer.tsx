@@ -37,8 +37,20 @@ export const SurahDrawer = ({
   const [pageQuery, setPageQuery] = useState("");
   const [expandedJuz, setExpandedJuz] = useState<number | null>(null);
   const [direction, setDirection] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   const pageScrollRef = useRef<HTMLDivElement>(null);
   const surahScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setHasMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Compute the active surah ID regardless of feed type
   const activeSurahId = useMemo(() => {
@@ -231,19 +243,22 @@ export const SurahDrawer = ({
         onClick={onClose}
       />
     
-      <aside
-        className={`fixed left-0 top-0 z-60 flex h-full w-[320px] flex-col border-r border-(--border)/10 bg-[var(--background)] shadow-xl transition-transform lg:static lg:z-10 lg:translate-x-0 lg:shadow-none ${
-          isOpen ? "translate-x-0 max-lg:w-full" : "-translate-x-full"
-        } lg:flex`}
+      <motion.aside
+        initial={false}
+        animate={{ x: isMobile ? (isOpen ? 0 : "-100%") : 0 }}
+        transition={hasMounted ? { type: "spring", stiffness: 300, damping: 30 } : { duration: 0 }}
+        className={`fixed left-0 top-0 z-60 flex h-full w-[320px] flex-col border-r border-(--border)/10 bg-[var(--background)] shadow-xl lg:static lg:z-10 lg:translate-x-0 lg:shadow-none max-lg:w-full lg:flex`}
       >
-        <div className="lg:hidden flex items-start justify-between gap-3 p-4">
-          <div className="flex gap-3">
-            <img src="/logo.svg" alt="Logo" className="size-7 mt-2" />
+        <div className="lg:hidden flex items-start justify-between gap-3 p-6 pb-2">
+          <div className="flex gap-4">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[var(--primary-green)]">
+              <img src="/logo.svg" alt="Logo" className="size-7 invert brightness-0" />
+            </div>
             <div className="leading-tight">
               <p className="text-xl font-extrabold text-[var(--text-primary)]">
                 Quran Mazid
               </p>
-              <p className="text-[10px] text-[var(--text-secondary)]">
+              <p className="text-[11px] font-medium text-[var(--primary-green)]/80">
                 Read, Study, and Learn The Quran
               </p>
             </div>
@@ -251,10 +266,10 @@ export const SurahDrawer = ({
           <button
             type="button"
             onClick={onClose}
-            className="mt-1 flex items-center justify-center rounded-full border border-[var(--border)] p-2 text-[var(--text-secondary)] transition hover:text-[var(--text-primary)] cursor-pointer"
+            className="flex size-10 items-center justify-center text-[var(--text-secondary)] transition hover:text-[var(--text-primary)] cursor-pointer"
             aria-label="Close surah drawer"
           >
-            <X size={18} />
+            <X size={24} strokeWidth={1.5} />
           </button>
         </div>
         <div className="flex flex-col gap-4 p-4">
@@ -504,7 +519,7 @@ export const SurahDrawer = ({
             )}
           </AnimatePresence>
         </div>
-      </aside>
+      </motion.aside>
     </>
   );
 };
