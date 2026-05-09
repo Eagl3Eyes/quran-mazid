@@ -34,7 +34,7 @@ Quran Mazid is a modern, high-performance web application for reading, studying,
 
 1. Clone the repository:
    ```bash
-   git clone [<repository-url>](https://github.com/Eagl3Eyes/quran-mazid.git)
+   git clone https://github.com/Eagl3Eyes/quran-mazid.git
    cd quranmazid
    ```
 
