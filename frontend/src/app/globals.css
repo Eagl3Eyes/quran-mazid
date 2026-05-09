@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'KFGQ';
+  src: url('/fonts/KFGQPC-Regular/KFGQPC Uthmanic Script HAFS Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PDMS-Islamic';
+  src: url('/fonts/_PDMS_IslamicFont Regular/_PDMS_IslamicFont Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+  --surface: #ffffff;
+  --surface-secondary: #f5f5f5;
+  --border: #428038;
+  --primary-green: #428038;
+  --text-primary: #111111;
+  --text-secondary: #6b7280;
+  --text-green: #428038;
+  --text-white: #f2f2f2;
+  --bg-surface: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-dark-green: #428038;
+  --bg-primary: var(--background);
+}
+
+.dark {
+  --background: #0d0d0d;
+  --foreground: #f5f5f5;
+  --surface: #0d0d0d;
+  --surface-secondary: #1a1a1a;
+  --border: #bdfdb3;
+  --text-primary: #e5e5e5;
+  --text-secondary: #a1a1aa;
+  --text-green: #428038;
+  --text-white: #f2f2f2;
+  --bg-surface: #111510;
+  --bg-dark-green: #428038;
+  --bg-primary: var(--background);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --font-inter: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-amiri: var(--font-amiri-quran), serif;
+  --font-kfgq: 'KFGQ', serif;
+  --font-islamic: 'PDMS-Islamic', serif;
+}
+
+/* Optimized Theme Transition - Targeted to prevent 'cracking' lag */
+html, body, aside, nav, main, header, section, .flex, button, input, div {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure images and their containers don't show a transitioning background square */
+img, .image-container {
+  background-color: transparent !important;
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary-green);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-green);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
